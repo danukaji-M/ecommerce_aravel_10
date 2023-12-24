@@ -2,7 +2,15 @@
 @php
     $email = request()->cookie('email');
     $password = request()->cookie('password');
+    $fname = session('fname');
+    $lname = session('lname');
+    $email = session('email');
 @endphp
+@if (session()->has('email'))
+    <script>
+        window.location.href = "/";
+    </script>
+@endif
 @section('content')
     <div class="container-fluid">
         <div class="row">
