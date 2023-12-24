@@ -1,53 +1,73 @@
-.img1{
+.img1 {
     background-image: url('/images/logback.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
-.main-navbar{
+
+.main-navbar {
     border-bottom: 1px solid #ccc;
 }
-.main-navbar .top-navbar{
+
+.main-navbar .top-navbar {
     background-color: #2874f0;
     padding-top: 10px;
     padding-bottom: 10px;
 }
-.main-navbar .top-navbar .brand-name{
+
+.main-navbar .top-navbar .brand-name {
     color: #fff;
 }
-.main-navbar .top-navbar .nav-link{
+
+.main-navbar .top-navbar .nav-link {
     color: #fff;
     font-size: 16px;
     font-weight: 500;
 }
-.main-navbar .top-navbar .dropdown-menu{
+
+.main-navbar .top-navbar .dropdown-menu {
     padding: 0px 0px;
     border-radius: 0px;
 }
-.main-navbar .top-navbar .dropdown-menu .dropdown-item{
+
+.main-navbar .top-navbar .dropdown-menu .dropdown-item {
     padding: 8px 16px;
     border-bottom: 1px solid #ccc;
     font-size: 14px;
 }
-.main-navbar .top-navbar .dropdown-menu .dropdown-item i{
+
+.main-navbar .top-navbar .dropdown-menu .dropdown-item i {
     width: 20px;
     text-align: center;
     color: #2874f0;
     font-size: 14px;
 }
-.main-navbar .navbar{
+
+.main-navbar .navbar {
     padding: 0px;
     background-color: #ddd;
 }
-.main-navbar .navbar .nav-item .nav-link{
+
+.main-navbar .navbar .nav-item .nav-link {
     padding: 8px 20px;
     color: #000;
     font-size: 15px;
 }
 
 @media only screen and (max-width: 600px) {
-    .main-navbar .top-navbar .nav-link{
+    .main-navbar .top-navbar .nav-link {
         font-size: 12px;
         padding: 8px 10px;
     }
+}
+
+.btn1 {
+    background-color: #fffbf9;
+    color: #ff7300;
+    font-size: 2px;
+    border-radius: 15px;
+    width: 70px;
+    border-color: #ff7300;
+    border: 1px solid #ff7300;
+    padding-left: 5px;
 }
