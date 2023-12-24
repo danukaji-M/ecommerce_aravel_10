@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class gender extends Model
+class user_type extends Model
 {
-    protected $table = 'gender';
-
-    public function users()
+    use HasFactory;
+    public function user()
     {
-        return $this->hasMany(users::class);
+        return $this->belongsToMany(user::class);
     }
 }

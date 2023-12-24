@@ -17,4 +17,16 @@ class users extends Model
         'phone',
         'gender_gender_id'
     ];
+    public function gender()
+    {
+        return $this->belongsTo(gender::class);
+    }
+    public function product()
+    {
+        return $this->hasMany(product::class);
+    }
+    public function user_type()
+    {
+        return $this->belongsTo(user_type::class);
+    }
 }
