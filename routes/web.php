@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/',[App\Http\Controllers\WelcomeControl::class,'welcomeName']);
+Route::get('/',[\App\Http\Controllers\indexController::class,'home']);
 
 Route::get('/signup',[\App\Http\Controllers\HTTPrequests::class,'signUp']);
 
@@ -25,3 +25,5 @@ Route::post('/dataStore', [App\Http\Controllers\dataStore::class,'store']);
 Route::get('/forgotpass',[App\Http\Controllers\HTTPrequests::class,'forgotpass']);
 
 Route::post('/loginProcess' , [App\Http\Controllers\loginProcess::class,'loginProcess']);
+
+Route::post('/logout' , [App\Http\Controllers\logout::class,'logout']);

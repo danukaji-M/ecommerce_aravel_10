@@ -24,7 +24,9 @@ function signUp() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var response = xhr.responseText;
-                console.log(response);
+                if(response == "Success") {
+                    window.location.href = "/login";
+                }
             } else {
                 console.log("error", xhr.responseText, xhr.status, xhr.readyState);
             }
@@ -60,7 +62,9 @@ function login() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var response = xhr.responseText;
-                console.log(response);
+                if(response == "Success") {
+                    window.location.href = "/";
+                }
             } else {
                 console.log("error", xhr.responseText, xhr.status, xhr.readyState);
             }
@@ -70,4 +74,25 @@ function login() {
     xhr.open("POST", "/loginProcess", true);
     xhr.setRequestHeader("X-CSRF-Token", csrfToken);
     xhr.send(f);
+}
+
+function logout(){
+    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4) {
+            if (xhr.status == 200) {
+                var response = xhr.responseText;
+                if(response == "Success") {
+                    window.location.href = "/";
+                }
+            } else {
+                console.log("error", xhr.responseText, xhr.status, xhr.readyState);
+            }
+        }
+    };
+
+    xhr.open("POST", "/logout", true);
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+    xhr.send();
 }

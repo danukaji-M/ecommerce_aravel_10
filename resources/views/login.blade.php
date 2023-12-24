@@ -1,4 +1,8 @@
 @extends('leyouts.app')
+@php
+    $email = request()->cookie('email');
+    $password = request()->cookie('password');
+@endphp
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -9,15 +13,17 @@
                         <div class="row">
                             <div class="col-12 mb-3">
                                 <label for="email" class=" text-muted ">Email</label>
-                                <input class=" form-control" type="text" name="login" id="email">
+                                <input value="{{ $email }}" class=" form-control" type="text" name="login"
+                                    id="email">
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="password" class=" text-muted ">password</label>
-                                <input class=" form-control" type="text" name="password" id="password">
+                                <input value="{{ $password }}" class=" form-control" type="password" name="password"
+                                    id="password">
                             </div>
                             <div class="col-12">
                                 <input type="checkbox" name="rememberme" id="rbm" checked>
-                                <label for="rbm" >Remember Me</label>
+                                <label for="rbm">Remember Me</label>
                             </div>
                             <div class="col-12 mb-3">
                                 <div class="row">

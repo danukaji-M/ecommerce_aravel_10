@@ -1,16 +1,17 @@
 @extends('leyouts.app')
-
-@section('title', 'test1')
+@php
+    $fname = session('fname');
+    $lname = session('lname');
+    $email = session('email');
+@endphp
+@section('title', 'LEOPARD LANKA | HOME')
 @section('content')
     <div class=" cotainer-fluid">
         <div class="row">
             <div class="col-12">
+                @include('leyouts.navbar')
                 <h1 class="text-bold">
-                    @if ($name != null)
-                        hello, {{ $name }}
-                    @else
-                        hello, user
-                    @endif
+
                 </h1>
                 <button class="btn btn-primary">Submit</button>
             </div>
