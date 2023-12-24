@@ -6,17 +6,11 @@
 @endphp
 @section('title', 'LEOPARD LANKA | HOME')
 @section('content')
-    <div class=" cotainer-fluid">
-        <div class="row">
-            <div class="col-12">
-                @include('leyouts.navbar')
-                <h1 class="text-bold">
-
-                </h1>
-                <button class="btn btn-primary">Submit</button>
-            </div>
-        </div>
-    </div>
+    @include('leyouts.navbar')
+    <hr>
+    @include('leyouts.slider')
+    <hr>
+    @include('leyouts.footer')
 @endsection
 @push('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
