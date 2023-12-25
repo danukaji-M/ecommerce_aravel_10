@@ -3,6 +3,7 @@
 <head>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title')</title>
+    <link type="image/png" sizes="96x96" rel="icon" href="{{ asset('favicon.ico') }}">
     @stack('styles')
 </head>
 

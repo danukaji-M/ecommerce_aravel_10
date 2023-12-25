@@ -36,7 +36,6 @@ return new class extends Migration
             $table->string('product_description', 400);
             $table->double('product_price');
             $table->double('Shipping_price');
-            $table->unsignedBigInteger('product_type_id');
             $table->unsignedBigInteger('product_category_id');
             $table->unsignedBigInteger('product_brand_id');
             $table->string('seller_email', 100);

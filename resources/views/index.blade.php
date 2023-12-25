@@ -60,7 +60,9 @@
                                                 </div>
                                                 <div class="col-12">
                                                     <div class="row">
-                                                        <button class="text-center bg-warning form-control btn text-light fw-bold" >SHOP NOW</button>
+                                                        <button
+                                                            class="text-center bg-warning form-control btn text-light fw-bold">SHOP
+                                                            NOW</button>
                                                     </div>
                                                 </div>
                                             </div>
