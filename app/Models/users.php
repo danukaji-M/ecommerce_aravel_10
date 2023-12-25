@@ -27,6 +27,6 @@ class users extends Model
     }
     public function user_type()
     {
-        return $this->belongsTo(user_type::class);
+        return $this->belongsToMany(user_type::class, 'user_has_user_type', 'user_email', 'user_type_id');
     }
 }

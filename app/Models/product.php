@@ -12,10 +12,6 @@ class product extends Model
     {
         return $this->belongsTo(users::class);
     }
-    public function product_type()
-    {
-        return $this->belongsTo(product_type::class);
-    }
     public function product_brandF()
     {
         return $this->belongsTo(product_brand::class);

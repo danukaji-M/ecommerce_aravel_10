@@ -27,3 +27,4 @@ Route::get('/forgotpass',[App\Http\Controllers\HTTPrequests::class,'forgotpass']
 Route::post('/loginProcess' , [App\Http\Controllers\loginProcess::class,'loginProcess']);
 
 Route::post('/logout' , [App\Http\Controllers\logout::class,'logout']);
+

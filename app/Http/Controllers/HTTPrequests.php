@@ -6,13 +6,10 @@ use App\Models\dataread;
 use App\Models\gendataread;
 use Illuminate\Http\Request;
 use PHPUnit\Event\TestSuite\Filtered;
+use Illuminate\Support\Facades\DB;
 
 class HTTPrequests extends Controller
 {
-    public function index()
-    {
-        return view('index');
-    }
 
     public function signUp()
     {
@@ -24,7 +21,8 @@ class HTTPrequests extends Controller
     {
         return view('login');
     }
-    public function forgotpass(){
+    public function forgotpass()
+    {
         return view('forgotpass');
     }
 }

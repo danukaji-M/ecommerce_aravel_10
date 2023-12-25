@@ -20,45 +20,32 @@
             <div class="row justify-content-center align-items-center">
                 <div class="col-11 col-md-11 col-lg-10">
                     <div class="row align-items-center justify-content-center">
-                        @for ($i = 0; $i < 4; $i++)
+                        @foreach ($hmProductData as $product)
                             <div class="col-6 col-md-3 ">
                                 <div class="row">
                                     <div class="card mt-3 col-11 col-lg-10">
-                                        <div id="carouselExampleFade" class="carousel slide carousel-fade">
-                                            <div class="carousel-inner">
-                                                <div class="carousel-item active">
-                                                    <img src="{{ asset('images/product1.jpg') }}" class="d-block w-100"
-                                                        alt="...">
-                                                </div>
-                                                <div class="carousel-item">
-                                                    <img src="{{ asset('images/product1.jpg') }}" class="d-block w-100"
-                                                        alt="...">
+                                        <div class="card-header">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <img src="{{ asset('' . $product->product_img . '') }}" class="img-fluid"
+                                                        alt="">
                                                 </div>
                                             </div>
-                                            <button class="carousel-control-prev" type="button"
-                                                data-bs-target="#carouselExampleFade" data-bs-slide="prev">
-                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Previous</span>
-                                            </button>
-                                            <button class="carousel-control-next" type="button"
-                                                data-bs-target="#carouselExampleFade" data-bs-slide="next">
-                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                                <span class="visually-hidden">Next</span>
-                                            </button>
                                         </div>
                                         <div class="card-body">
                                             <hr>
                                             <p class="fw-bold" style="font-size: 0.5rem">
-                                                POCO M3 Pro 5G (Cool Yellow, 64 GB) (4 GB RAM)
+                                                {{ $product->product_name }}
                                             </p>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-12">
                                                     <p class="fw-bold text-info" style="font-size: 0.5rem">
-                                                        Rs. 13,999</p>
+                                                    LKR. {{$product->product_price}}.00  
+                                                    </p>
                                                     <p class="btn1 ">free delevery</p>
                                                 </div>
-                                                <div class="col-12">
+                                                <div class="d-none d-md-block col-12">
                                                     <div class="row">
                                                         <button
                                                             class="text-center bg-warning form-control btn text-light fw-bold">SHOP
@@ -70,7 +57,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @endfor
+                        @endforeach
                     </div>
                 </div>
             </div>

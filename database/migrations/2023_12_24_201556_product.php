@@ -40,6 +40,7 @@ return new class extends Migration
             $table->unsignedBigInteger('product_brand_id');
             $table->string('seller_email', 100);
             $table->integer('product_count');
+            $table->boolean('product_status')->default(1);
             $table->timestamps();
 
             $table->foreign('product_category_id')->references('id')->on('product_category');

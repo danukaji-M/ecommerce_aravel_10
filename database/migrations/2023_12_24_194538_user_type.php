@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,6 +16,13 @@ return new class extends Migration
             $table->string('user_type_name',45);
             $table->timestamps();
         });
+        DB::table('user_type')->insert([
+            'user_type_name'=>'Admin',
+            'user_type_name'=>'Seller',
+            'user_type_name'=>'Customer',
+            'user_type_name'=>'Moderator'
+        
+        ]);
     }
 
     /**

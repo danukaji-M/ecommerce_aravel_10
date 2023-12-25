@@ -6,6 +6,7 @@ function signUp() {
     var pass2 = document.getElementById("password2").value;
     var gender = document.getElementById("gender").value;
     var phone = document.getElementById("phone").value;
+    var user_types = 3;
 
     var f = new FormData();
     f.append("fname", fname);
@@ -15,6 +16,7 @@ function signUp() {
     f.append("pass2", pass2);
     f.append("gender", gender);
     f.append("phone", phone);
+    f.append("user_types", user_types);
 
     var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
     
@@ -24,6 +26,7 @@ function signUp() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var response = xhr.responseText;
+                console.log(response);
                 if(response == "Success") {
                     window.location.href = "/login";
                 }
@@ -62,6 +65,7 @@ function login() {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var response = xhr.responseText;
+                console.log(response);
                 if(response == "Success") {
                     window.location.href = "/";
                 }
@@ -82,7 +86,7 @@ function logout(){
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
-                var response = xhr.responseText;
+                console.log(xhr.responseText);
                 if(response == "Success") {
                     window.location.href = "/";
                 }

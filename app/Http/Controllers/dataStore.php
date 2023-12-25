@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Models\users;
+use App\Models\user_type;
+use App\Models\userHasUserType;
 use Illuminate\Support\Facades\Log;
 
 
@@ -56,8 +58,14 @@ class dataStore extends Controller
                 'phone' => $request->input('phone'),
                 'gender_gender_id' => $request->input('gender')
             ]);
+
+            userHasUserType::create([
+                'user_email' => $request->input('email'),
+                'user_type_id' => 3
+            ]);
+
         } catch (\Exception $e) {
-            
+
             return redirect()->route('error')->with('message', 'Database error: ' . $e->getMessage());
         }
 

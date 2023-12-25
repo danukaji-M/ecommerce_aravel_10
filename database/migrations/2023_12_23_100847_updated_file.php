@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -10,11 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //create gender table
         Schema::create('gender', function (Blueprint $table) {
             $table->id('gender_id');
             $table->string('gender_name', 10);              
             $table->timestamps();
         });
+        //insert gender values
+        DB::table('gender')->insert([
+            'gender_id'=>'1',
+            'gender_name'=>'Male',
+            'gender_id'=>'2',
+            'gender_name'=>'Female'
+        ]);
 
         Schema::create('users', function (Blueprint $table) {
             $table->string('email', 100)->primary();
