@@ -18,20 +18,27 @@ function signUp() {
     f.append("phone", phone);
     f.append("user_types", user_types);
 
-    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-    
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
+
     var xhr = new XMLHttpRequest();
-    
+
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var response = xhr.responseText;
                 console.log(response);
-                if(response == "Success") {
+                if (response == "Success") {
                     window.location.href = "/login";
                 }
             } else {
-                console.log("error", xhr.responseText, xhr.status, xhr.readyState);
+                console.log(
+                    "error",
+                    xhr.responseText,
+                    xhr.status,
+                    xhr.readyState
+                );
             }
         }
     };
@@ -47,9 +54,9 @@ function login() {
     var checker = document.getElementById("rbm").checked;
 
     var ck;
-    if(checker == true) {
+    if (checker == true) {
         ck = 1;
-    }else{
+    } else {
         ck = 0;
     }
 
@@ -58,19 +65,25 @@ function login() {
     f.append("password", pass);
     f.append("remember", ck);
 
-
-    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 var response = xhr.responseText;
                 console.log(response);
-                if(response == "Success") {
+                if (response == "Success") {
                     window.location.href = "/";
                 }
             } else {
-                console.log("error", xhr.responseText, xhr.status, xhr.readyState);
+                console.log(
+                    "error",
+                    xhr.responseText,
+                    xhr.status,
+                    xhr.readyState
+                );
             }
         }
     };
@@ -80,23 +93,31 @@ function login() {
     xhr.send(f);
 }
 
-function logout(){
-    var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+function logout() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
             if (xhr.status == 200) {
                 console.log(xhr.responseText);
-                if(response == "Success") {
-                    window.location.href = "/";
+                if (response == "Success") {
                 }
             } else {
-                console.log("error", xhr.responseText, xhr.status, xhr.readyState);
+                console.log(
+                    "error",
+                    xhr.responseText,
+                    xhr.status,
+                    xhr.readyState
+                );
             }
         }
     };
 
-    xhr.open("POST", "/logout", true);
+    xhr.open("get", "/logout", true);
     xhr.setRequestHeader("X-CSRF-Token", csrfToken);
     xhr.send();
 }
+
+

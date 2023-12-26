@@ -4,11 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 class indexController extends Controller
 {
-    public function Home()
+    public function Home(Request $request)
     {
-
+        $brandView = DB::select('
+            SELECT * FROM `product_brand` JOIN `brand_click` ON `product_brand`.`id`= `brand_click`.`brand_id`
+            JOIN `brand_images` ON `brand_images`.`product_brand_id` = `product_brand`.`id` ORDER BY 
+            `brand_click`.`clicks` ASC LIMIT 6
+        ');
+        
+        $limit = $request->input('i');
         $hmProductData = DB::select('
             SELECT * FROM `product`
             JOIN `product_img` ON `product`.`id` = `product_img`.`product_id`
@@ -18,20 +25,49 @@ class indexController extends Controller
             JOIN `category_click` ON `product_category`.`id` = `category_click`.`category_id`
             JOIN `product_click` ON `product_click`.`product_id` = `product`.`id`
             WHERE `product`.`product_status` = 1
-            ORDER BY `product`.`created_at` DESC, `category_click`.`clicks` ASC, `brand_click`.`clicks` ASC, `product_click`.`clicks` ASC
-            LIMIT 4
+            ORDER BY `product`.`created_at` ASC, `category_click`.`clicks` DESC, `brand_click`.`clicks` DESC, `product_click`.`clicks` DESC
+            LIMIT '.($limit+4).'
         ');
 
-        return view('index', ['hmProductData' => $hmProductData]);
-        // Check if the query returned any results
-        if ($hmProductData) {
-            // Process the data or pass it to the view
-            return view('index', ['hmProductData' => $hmProductData]);
-        } else {
-            // Handle the case where no data is found
-            return view('index', ['hmProductData' => []]); // You can customize this based on your requirements
-        }
 
-        return view('index');
+        $categoryView = DB::select('
+            SELECT * FROM `product_category` JOIN `category_click` ON 
+            `product_category`.`id` = `category_click`.`category_id` JOIN 
+            `category_images` ON `category_images`.`product_category_id` = `product_category`.`id`
+            ORDER BY `category_click`.`clicks` DESC LIMIT 4 
+        ');
+
+        $newArrive = DB::select('
+            SELECT * FROM `product`
+            JOIN `product_img` ON `product`.`id` = `product_img`.`product_id` 
+            JOIN `product_click` ON `product_click`.`product_id` = `product`.`id`
+            WHERE `product`.`product_status` = 1  ORDER BY `product`.`created_at` DESC,
+            `product_click`.`clicks` DESC
+        ');
+
+        $data = [
+            'hmProductData' => $hmProductData,
+            'brandView' => $brandView,
+            'categoryView' => $categoryView,
+            'newArrive' => $newArrive,
+            'i'=>$limit
+        ];
+
+        if ($data) {
+            return view('index', [
+                'hmProductData' => $hmProductData,
+                'brandView' => $brandView,
+                'categoryView' => $categoryView,
+                'newArrive' => $newArrive,
+                'i'=>$limit
+            ]);
+        } else {
+            return view('index', [
+                'hmProductData' => [],
+                'brandView' => [],
+                'categoryView' => [],
+                'newArrive'=>[]
+            ]);
+        }
     }
 }

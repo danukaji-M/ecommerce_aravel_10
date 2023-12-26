@@ -12,19 +12,21 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+use App\Http\Controllers;
+use App\Http\Controllers\Controller;
 
 Route::get('/',[\App\Http\Controllers\indexController::class,'home']);
 
-Route::get('/signup',[\App\Http\Controllers\HTTPrequests::class,'signUp']);
+Route::get('/signup',[Controllers\HTTPrequests::class,'signUp']);
 
 Route::get('/login',[App\Http\Controllers\HTTPrequests::class,'login']);
 
 Route::post('/dataStore', [App\Http\Controllers\dataStore::class,'store']);
 
-Route::get('/forgotpass',[App\Http\Controllers\HTTPrequests::class,'forgotpass']);
+Route::get('/forgotpass',[\App\Http\Controllers\forgotPassword::class,'forgotpass']);
 
 Route::post('/loginProcess' , [App\Http\Controllers\loginProcess::class,'loginProcess']);
 
 Route::post('/logout' , [App\Http\Controllers\logout::class,'logout']);
 
+Route::get('/userprofile' , [App\Http\Controllers\userProfileController::class,'userProfile']);

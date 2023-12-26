@@ -12,4 +12,7 @@ class product_brand extends Model
     {
         return $this->hasMany(product::class);
     }
+    public function brand_images(){
+        return $this->belongsTo(brand_images::class);
+    }
 }

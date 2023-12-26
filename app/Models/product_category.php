@@ -12,4 +12,7 @@ class product_category extends Model
     {
         return $this->hasMany(product::class);
     }
+    public function category_images(){
+        return $this->belongsTo(category_images::class);
+    }
 }

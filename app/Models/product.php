@@ -12,7 +12,7 @@ class product extends Model
     {
         return $this->belongsTo(users::class);
     }
-    public function product_brandF()
+    public function product_brand()
     {
         return $this->belongsTo(product_brand::class);
     }
