@@ -20,7 +20,13 @@
                                         <div class="row">
                                             <div class="col-3 col-md-2">
                                                 <div class="user-profile-img m-4">
-                                                    <img src="{{ asset('img/user.png') }}" alt="" srcset="">
+                                                    <img src="
+                                                    @if ($userProfile)
+                                                        {{ $userProfile->profile_pic }}
+                                                        @else
+                                                        {{ asset('profile_img/default.png') }}
+                                                    @endif
+                                                    " alt="" class="img-fluid user-profile-img" srcset="">
                                                 </div>
                                             </div>
                                             <div class="col-8">
@@ -34,8 +40,8 @@
                                     </div>
                                     <div class="col-5 text-end">
                                         <div class="user-profile-edit m-4 ">
-                                            <a href="" id="openModalButton" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                                class="btn btn-primary">Edit Profile</a>
+                                            <a href="" id="openModalButton" data-bs-toggle="modal"
+                                                data-bs-target="#exampleModal" class="btn btn-primary">Edit Profile</a>
                                         </div>
                                     </div>
                                 </div>
@@ -61,93 +67,61 @@
                             <span>DD/MM/YYYY</span>
                         </div>
                     </div>
-                    <div class="row">
+                    @if ($addressData)
+                    @else
+                        <div
+                            class="row
+                    @if ($addressData) d-none @endif
+                    justify-content-center text-center align-items-center">
+                            <div class="col-12">
+                                <a href="/addressupdate" class="btn mt-4 btn-info">
+                                    Add YOur Adresses
+                                </a>
+                            </div>
+                        </div>
+                        <!------------------------Address Cards-------------------------->
+                    @endif
+                    <div
+                        class="row 
+                    @if ($addressData) d-block
+                    @else
+                        d-none @endif
+                    ">
                         <div class="col-12">
                             <div class="row">
-                                <div class="col-12 mt-3 col-lg-4">
-                                    <div class="card">
-                                        <div class="h3 text-info">Primary Address</div>
-                                        <div class="address">
-                                            <span class="fw-bold">Address Line 1:</span>
-                                            <span>line 1</span>
-                                            <br>
-                                            <span class="fw-bold">Address Line 2:</span>
-                                            <span>line 2</span>
-                                            <br>
-                                            <span class="fw-bold">City:</span>
-                                            <span>city</span>
-                                            <br>
-                                            <span class="fw-bold">District:</span>
-                                            <span>district</span>
-                                            <br>
-                                            <span class="fw-bold">Province:</span>
-                                            <span>Province</span>
-                                            <br>
-                                            <span class="fw-bold">Postal Code:</span>
-                                            <span>Psotal Code</span>
-                                            <br>
-                                            <input name="setPrimary" id="setPrimary" type="radio">
-                                            <label for="setPrimary">Use As A Billing Address</label>
+                                @if ($addressData)
+                                    @foreach ($addressData as $Data)
+                                        <div class="col-12 mt-3 col-lg-4">
+                                            <div class="card">
+                                                <div class="h3 text-info">{{$Data->address_type}} Address</div>
+                                                <div class="address">
+                                                    <span class="fw-bold">Address Line 1:</span>
+                                                    <span>{{$Data->ad_ln_1}}</span>
+                                                    <br>
+                                                    <span class="fw-bold">Address Line 2:</span>
+                                                    <span>{{$Data->ad_ln_2}}</span>
+                                                    <br>
+                                                    <span class="fw-bold">City:</span>
+                                                    <span>{{$Data->city_name}}</span>
+                                                    <br>
+                                                    <span class="fw-bold">District:</span>
+                                                    <span>{{$Data->district_name}}</span>
+                                                    <br>
+                                                    <span class="fw-bold">Province:</span>
+                                                    <span>{{$Data->province_name}}</span>
+                                                    <br>
+                                                    <span class="fw-bold">Postal Code:</span>
+                                                    <span>{{$Data->postal_code}}</span>
+                                                    <br>
+                                                    <input name="setPrimary" id="setPrimary{{$Data->address_type_id}}" type="radio">
+                                                    <label for="setPrimary">Use As A Billing Address</label>
+                                                </div>
+                                                <button class="btn mt-4 btn-warning">Change {{$Data->address_type}} Address</button>
+                                            </div>
                                         </div>
-                                        <button class="btn mt-4 btn-warning">Change Primary Address</button>
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-3 col-lg-4">
-                                    <div class="card">
-                                        <div class="h3 text-info">Primary Address</div>
-                                        <div class="address">
-                                            <span class="fw-bold">Address Line 1:</span>
-                                            <span>line 1</span>
-                                            <br>
-                                            <span class="fw-bold">Address Line 2:</span>
-                                            <span>line 2</span>
-                                            <br>
-                                            <span class="fw-bold">City:</span>
-                                            <span>city</span>
-                                            <br>
-                                            <span class="fw-bold">District:</span>
-                                            <span>district</span>
-                                            <br>
-                                            <span class="fw-bold">Province:</span>
-                                            <span>Province</span>
-                                            <br>
-                                            <span class="fw-bold">Postal Code:</span>
-                                            <span>Psotal Code</span>
-                                            <br>
-                                            <input name="setPrimary" id="setPrimary1" type="radio">
-                                            <label for="setPrimary1">Use As A Billing Address</label>
-                                        </div>
-                                        <button class="btn mt-4 btn-warning">Change Secondary Address</button>
-
-                                    </div>
-                                </div>
-                                <div class="col-12 mt-3 col-lg-4">
-                                    <div class="card">
-                                        <div class="h3 text-info">Primary Address</div>
-                                        <div class="address">
-                                            <span class="fw-bold">Address Line 1:</span>
-                                            <span>line 1</span>
-                                            <br>
-                                            <span class="fw-bold">Address Line 2:</span>
-                                            <span>line 2</span>
-                                            <br>
-                                            <span class="fw-bold">City:</span>
-                                            <span>city</span>
-                                            <br>
-                                            <span class="fw-bold">District:</span>
-                                            <span>district</span>
-                                            <br>
-                                            <span class="fw-bold">Province:</span>
-                                            <span>Province</span>
-                                            <br>
-                                            <span class="fw-bold">Postal Code:</span>
-                                            <span>Psotal Code</span>
-                                            <br>
-                                        </div>
-                                        <button class="btn mt-4 btn-warning">Change Billing Address</button>
-
-                                    </div>
-                                </div>
+                                    @endforeach
+                                @endif
+                                <!------------------------Address Cards-------------------------->
                             </div>
                         </div>
                     </div>

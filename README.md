@@ -1,66 +1,300 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Deploy Laravel (with Capistrano)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![all contributors](https://img.shields.io/github/contributors/zeroc0d3/deploy-laravel)
+![tags](https://img.shields.io/github/v/tag/zeroc0d3/deploy-laravel?sort=semver)
+![issues](https://img.shields.io/github/issues/zeroc0d3/deploy-laravel)
+![pull requests](https://img.shields.io/github/issues-pr/zeroc0d3/deploy-laravel)
+![forks](https://img.shields.io/github/forks/zeroc0d3/deploy-laravel)
+![stars](https://img.shields.io/github/stars/zeroc0d3/deploy-laravel)
+![license](https://img.shields.io/github/license/zeroc0d3/deploy-laravel)
 
-## About Laravel
+Zero downtime deployment Laravel with Capistrano
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Prerequirements
+* Ruby Environment (RBENV) or Ruby Version Manager (RVM)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+* Clone this repo
+  ```
+  git clone git@github.com:zeroc0d3/deploy-laravel.git
+  ```
+* Running bundle
+  ```
+  cd deploy-laravel
+  bundle install
+  ```
+* Edit Laravel source target in `config/deploy.rb`
+  ```
+  set :repo_url, "[YOUR_LARAVEL_REPO]"
+  ```
+* Edit target server environment in `config/deploy/[environment].rb`
+  ```
+  server '[YOUR_TARGET_SERVER]'
+  ```
+* Upload your shared files & folders in your server / VPS
+  ```
+  /data/[laravel-project]/[environment]/shared/src
+  ---
+  .env
+  composer.json
+  composer.lock
+  node_modules
+  package.json
+  storage/debugbar
+  storage/framework
+  storage/logs
+  vendor
+  yarn.lock
+  ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* Setup number of release folder in `config/deploy.rb`
+  ```
+  set :keep_releases, 5    ## keep 5 release folder
+  ```
 
-## Learning Laravel
+## Symlink Files (Default)
+```
+append :linked_files, "#{fetch(:source)}/.env", "#{fetch(:source)}/composer.json", "#{fetch(:source)}/composer.lock", "#{fetch(:source)}/package.json", "#{fetch(:source)}/yarn.lock",
+---
+.env
+composer.json
+composer.lock
+package.json
+yarn.lock
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Symlink Folders (Default)
+```
+append :linked_dirs, "#{fetch(:source)}/vendor", "#{fetch(:source)}/node_modules", "#{fetch(:source)}/storage"
+---
+vendor
+node_modules
+storage
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Folder Structure
+```
+[laravel-project]
+├── staging
+│   ├── current -> /data/[laravel-project]/staging/releases/20200823134641/
+│   ├── releases
+│   │   ├── 20200823081119
+│   │   └── 20200823134641   ## the latest symlink
+│   │       ├── .env -> /data/[laravel-project]/staging/shared/src/.env
+│   │       ├── composer.json -> /data/[laravel-project]/staging/shared/src/composer.json
+│   │       ├── composer.lock -> /data/[laravel-project]/staging/shared/src/composer.lock
+│   │       ├── vendor -> /data/[laravel-project]/staging/shared/src/vendor/
+│   │       ├── node_modules -> /data/[laravel-project]/staging/shared/src/node_modules/
+│   │       ├── storage -> /data/[laravel-project]/staging/shared/src/storage/
+│   │       └── yarn.lock -> /data/[laravel-project]/staging/shared/src/yarn.lock
+│   ├── shared
+│   │   ├── log
+│   │   └── src
+│   │       ├── .env
+│   │       ├── composer.json
+│   │       ├── vendor
+│   │       ├── node_modules
+│   │       └── storage
+│   │           ├── debugbar
+│   │           ├── framework
+│   │           │   ├── cache
+│   │           │   ├── sessions
+│   │           │   └── views
+│   │           ├── logs
+│   │           └── users
+│   └── tmp
+└── [environments]
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Deployment
+* Staging
+  ```
+  cap staging deploy
+  ```
+* Production
+  ```
+  cap production deploy
+  ```
 
-## Laravel Sponsors
+## Manual Trigger
+* Reload / Restart NGINX
+  ```
+  cap [environment] nginx:[manual_reload|manual_restart]
+  ---
+  cap staging nginx:manual_reload
+  cap staging nginx:manual_restart
+  ```
+* Reload / Restart PHP-FPM (php7.4-fpm)
+  ```
+  cap [environment] phpfpm:[manual_reload|manual_restart]
+  ---
+  cap staging phpfpm:manual_reload
+  cap staging phpfpm:manual_restart
+  ```
+* Install / Dump Autoload Composer
+  ```
+  cap [environment] composer:[install|dumpautoload|initialize]
+  ---
+  cap staging composer:install
+  cap staging composer:dumpautoload
+  cap staging composer:initialize      ## (will run install & dumpautoload)
+  ```
+* Clear View / Clear Cache Framework
+  ```
+  cap [environment] artisan:[clear_view|clear_cache|clear_all]
+  ---
+  cap staging artisan:clear_view
+  cap staging artisan:clear_cache
+  cap staging artisan:clear_all        ## (will run clear_view & clear_cache)
+  ```
+* NPM Package Dependencies
+  ```
+  cap [environment] npm:[install|update|cleanup|reinstall]
+  ---
+  cap staging npm:install
+  cap staging npm:update
+  cap staging npm:cleanup
+  cap staging npm:reinstall            ## (will run cleanup & install)
+  ```
+* Yarn Package Dependencies
+  ```
+  cap [environment] yarn:[install|update|cleanup|reinstall]
+  ---
+  cap staging yarn:install
+  cap staging yarn:update
+  cap staging yarn:cleanup
+  cap staging yarn:reinstall           ## (will run cleanup & install)
+  ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## How to Use Docker
+### Running All Docker Compose
+* Set environment `.env`
+  ```
+  cp .env.example .env
+  ```
+* Running script docker container
+  ```
+  ./run-docker.sh
+  ```
+* Running for container deployment only
+  ```
+  ./run-deploy.sh
+  ```
 
-### Premium Partners
+### Running with Makefile
+* Running docker compose
+  ```
+  make run-docker
+  make run-deploy
+  ```
+* Stop docker compose
+  ```
+  make stop-docker
+  make stop-deploy
+  ```
+* Remove docker compose
+  ```
+  make remove-docker
+  make remove-deploy
+  ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Cleanup Environment
+* Remove all container
+  ```
+  docker-compose -f compose/app-compose.yml down
+  --- or ---
+  make remove
+  ```
+* Remove container deployment only
+  ```
+  docker-compose -f compose/app-compose-deploy.yml down
+  --- or ---
+  make remove-deploy
+  ```
 
-## Contributing
+## Git Pipeline CI/CD
+* Create secure PEM file for deployment
+  ```
+  openssl rsa -in id_rsa -outform pem > ~/.ssh/id_rsa.pem
+  --- or ---
+  ./run-encode.sh
+  ```
+* Added PEM file (myapp.pem) in `keys` folder
+  ```
+  cp ~/.ssh/id_rsa.pem keys/myapp.pem
+  ```
+* GitLab Configuration Variable
+  : [.gitlab-ci.yml](.gitlab-ci.yml)
+  ```
+  MYAPP_SSH_PRIVATE_KEY=
+  MYAPP_SSH_PUBLIC_KEY=
+  MYAPP_KNOWN_HOSTS=
+  ```
+* BitBucket Configuration Variable (base64 encode)
+  : [bitbucket-pipelines.yml](bitbucket-pipelines.yml)
+  ```
+  MYAPP_SSH_PRIVATE_KEY=
+  MYAPP_SSH_PUBLIC_KEY=
+  MYAPP_KNOWN_HOSTS=
+  ```
+* CircleCI Configuration Variable
+  : [.circleci/config.yml](.circleci/config.yml)
+  ```
+  MYAPP_SSH_PRIVATE_KEY=
+  MYAPP_SSH_PUBLIC_KEY=
+  MYAPP_KNOWN_HOSTS=
+  ```
+* OpenShift Configuration
+  : [.openshift/action_hooks](.openshift/action_hooks)
+* Jenkins Configuration
+  : [jenkins/staging/Jenkinsfile](jenkins/staging/Jenkinsfile) for Staging and
+  [jenkins/production/Jenkinsfile](jenkins/production/Jenkinsfile) for Production, detail documentation refer to this
+  [link](jenkins/README.md)
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+* Trigger Pipeline CI/CD
+  ```
+  - Commit
+    git commit -m "[messages]"
 
-## Code of Conduct
+  - Merge / Checkout Branch `dev-master` for production
+    git checkout dev-master
+    git merge [from_branch]
+    --- or ---
+    git branch -D dev-master    # delete dev-master branch
+    git branch dev-master
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+  - Merge / Checkout Branch `dev-staging` for staging
+    git checkout dev-staging
+    git merge [from_branch]
+    --- or ---
+    git branch -D dev-staging   # delete dev-staging branch
+    git branch dev-staging
 
-## Security Vulnerabilities
+  - Push all branch & tags
+    git push --all -u && git push --tags
+  ```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Tested Environment
+### Versioning
+* Docker version
+  ```
+  Docker version 19.03.13, build 4484c46d9d
+  ```
+* Docker-Compose version
+  ```
+  docker-compose version 1.27.4, build 40524192
+  ```
+* Jenkins version
+  ```
+  Jenkins 2.249.2
+  ```
 
-## License
+## TODO
+* [X] Pipeline CI/CD using Jenkins
+* [ ] Provisioning with Terraform & Terragrunt
+* [ ] Deployment with Helm Chart
+* [ ] Deployment with K8S
+* [ ] Add K8S Playground Sample
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Properties
+* Author  : **Dwi Fahni Denni (@zeroc0d3)**
+* License : **Apache ver-2**

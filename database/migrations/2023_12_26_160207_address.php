@@ -67,6 +67,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('address_type');
+        Schema::dropIfExists('province');
+        Schema::dropIfExists('district');
+        Schema::dropIfExists('city');
+        Schema::dropIfExists('address');
     }
 };

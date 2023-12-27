@@ -9,7 +9,7 @@
                     <div class="col-md-5 my-auto">
                         <form role="search">
                             <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
+                                <input type="search" id="search" placeholder="Search your product" class="form-control" />
                                 <button class="btn bg-info input-group-text fw-bold" type="submit">
                                     search
                                     <i class="bi bi-search"></i>
