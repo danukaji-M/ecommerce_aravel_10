@@ -12,70 +12,77 @@
             <div class="row">
                 <div class="col-12 mt-3">
                     <h3 class="text-center">Address Insert</h3>
-                </div>
-                @foreach ($addressType as $types)
-                    <div class="col-12 col-lg-4">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $types->address_type }} Address</h5>
-                                <hr>
-                                <label for="line1-{{ $types->address_type }}" class="form-label">Address Line 1</label>
-                                <input placeholder="Enter Your Address Line 1
-                                "
-                                    value="@if ($addressData) @foreach ($addressData as $adData)
-                                        @if ($adData->address_type == $types->address_type)
-                                            {{ $adData->ad_ln1 }} @endif
-                                    @endforeach
-                                @endif"
-                                    type="text" id="line1-{{ $types->address_type }}" class="form-control">
-                                <label for="line2-{{ $types->address_type }}" class="form-label">Address Line 2</label>
-                                <input placeholder="Enter Your Address Line 2"
-                                value="@if ($addressData) @foreach ($addressData as $adData)
-                                        @if ($adData->address_type == $types->address_type)
-                                            {{ $adData->ad_ln2 }} @endif
-                                    @endforeach
-                                @endif"
-                                type="text" id="line2-{{ $types->address_type }}" class="form-control">
-                                <label for="city-{{ $types->address_type }}" class="form-label">Select City</label>
-                                <select class="form-select" id="city-{{ $types->address_type }}">
-                                    <option value="0">Select Your City</option>
-                                    @foreach ($city as $cities)
-                                        <option value="{{ $cities->id }}">{{ $cities->city_name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="district-{{ $types->address_type }}" class="form-label">Select District</label>
-                                <select class="form-select" id="district-{{ $types->address_type }}">
-                                    <option value="0">Select Your Distrct</option>
-                                    @foreach ($district as $districts)
-                                        <option value="{{ $districts->id }}">{{ $districts->district_name }}</option>
-                                    @endforeach
-                                </select>
-                                <label for="province-{{ $types->address_type }}" class="form-label">Select Province</label>
-                                <select class="form-select" id="province-{{ $types->address_type }}">
-                                    <option value="0">Select Your Proince</option>
-                                    @foreach ($province as $provincess)
-                                        <option value="{{ $provinces->id }}">{{ $provinces->province_name }}</option>
-                                    @endforeach
-                                </select>
-                                <hr>
-                                <!--update And change address-->
-                                <button href="#"
-                                    onclick="
-                                    
-                                @if ($addressType) updateAddress({{ $types->id }});
-                                    @else
-                                    insertAddress({{ $types->id }}); @endif
-                                "
-                                    class="btn btn-danger">
-                                    @if ($addressType)
-                                        Update {{ $types->address_type }} Address
-                                    @endif
-                                </button>
-                                <!--update And change address-->
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-12 card col-md-10 col-lg-9">
+                            <span class="text-info h5 fw-bold">
+                                Add Your Address
+                            </span>
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="line1">Address Line 1</label>
+                                    <input type="text" id="line1" class="form-control"
+                                        placeholder="Enter Your Address Line 1">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="line2">Address Line 2</label>
+                                    <input type="text" id="line2" class="form-control"
+                                        placeholder="Enter Your Address Line 2">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="postal">Postal Code</label>
+                                    <input type="text" id="postal" class="form-control"
+                                        placeholder="Enter Your Postal Code">
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="city">Select Your City</label>
+                                    <select name="city" class="form-control" id="city">
+                                        <option value="0">Select Your City</option>
+                                        @foreach ($city as $cities)
+                                            <option value="{{ $cities->id }}">
+                                                {{ $cities->city_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="city">Select Your District</label>
+                                    <select name="district" class="form-control" id="district">
+                                        <option value="0">Select Your Dsitrict</option>
+                                        @foreach ($district as $districts)
+                                            <option value="{{ $districts->id }}">
+                                                {{ $districts->district_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="city">Select Your Province</label>
+                                    <select name="province" class="form-control" id="province">
+                                        <option value="0">Select Your Province</option>
+                                        @foreach ($province as $provinces)
+                                            <option value="{{ $provinces->id }}">
+                                                {{ $provinces->province_name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <input type="checkbox" id="default">
+                                    <label class="form-label text-warning" for="default">Use As Default Address</label>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    <input type="checkbox" id="billing">
+                                    <label class="form-label text-warning" for="billing">Use As Billing Address</label>
+                                </div>
+                                <div class="col-12 m-5 col-lg-6">
+                                    <button class="btn btn-block btn-warning" >
+                                        Add Address
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
     </div>

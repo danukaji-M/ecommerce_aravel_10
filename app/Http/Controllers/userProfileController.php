@@ -13,10 +13,12 @@ class userProfileController extends Controller
     {
         $email = session('email');
         $addressData = DB::select("
-        SELECT * FROM `address` JOIN `city` ON `address`.`city_id` = `city`.`id`
+        SELECT * FROM `address`
+        JOIN `city` ON `address`.`city_id` = `city`.`id`
         JOIN `district` ON `address`.`district_id` = `district`.`id`
         JOIN `province` ON `address`.`province_id` = `province`.`id`
-        JOIN `address_type` ON `address`.`address_type_id` = `address_type`.`id`
+        JOIN `address_has_address_type` AS `aht1` ON `aht1`.`address_id` = `address`.`id`
+        JOIN `address_type` ON `aht1`.`address_type_id` = `address_type`.`id`
         WHERE `address`.`user_email` = '" . $email . "'
         ");
 

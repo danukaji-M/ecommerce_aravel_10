@@ -75,56 +75,11 @@
                     justify-content-center text-center align-items-center">
                             <div class="col-12">
                                 <a href="/addressupdate" class="btn mt-4 btn-info">
-                                    Add YOur Adresses
+                                    Add Adresses
                                 </a>
                             </div>
                         </div>
-                        <!------------------------Address Cards-------------------------->
-                    @endif
-                    <div
-                        class="row 
-                    @if ($addressData) d-block
-                    @else
-                        d-none @endif
-                    ">
-                        <div class="col-12">
-                            <div class="row">
-                                @if ($addressData)
-                                    @foreach ($addressData as $Data)
-                                        <div class="col-12 mt-3 col-lg-4">
-                                            <div class="card">
-                                                <div class="h3 text-info">{{$Data->address_type}} Address</div>
-                                                <div class="address">
-                                                    <span class="fw-bold">Address Line 1:</span>
-                                                    <span>{{$Data->ad_ln_1}}</span>
-                                                    <br>
-                                                    <span class="fw-bold">Address Line 2:</span>
-                                                    <span>{{$Data->ad_ln_2}}</span>
-                                                    <br>
-                                                    <span class="fw-bold">City:</span>
-                                                    <span>{{$Data->city_name}}</span>
-                                                    <br>
-                                                    <span class="fw-bold">District:</span>
-                                                    <span>{{$Data->district_name}}</span>
-                                                    <br>
-                                                    <span class="fw-bold">Province:</span>
-                                                    <span>{{$Data->province_name}}</span>
-                                                    <br>
-                                                    <span class="fw-bold">Postal Code:</span>
-                                                    <span>{{$Data->postal_code}}</span>
-                                                    <br>
-                                                    <input name="setPrimary" id="setPrimary{{$Data->address_type_id}}" type="radio">
-                                                    <label for="setPrimary">Use As A Billing Address</label>
-                                                </div>
-                                                <button class="btn mt-4 btn-warning">Change {{$Data->address_type}} Address</button>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                @endif
-                                <!------------------------Address Cards-------------------------->
-                            </div>
-                        </div>
-                    </div>
+                    @endif>
                 </div>
             </div>
         </div>

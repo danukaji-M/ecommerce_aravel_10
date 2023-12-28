@@ -17,9 +17,9 @@ class HTTPrequests extends Controller
         return view('signUpLogin', compact('data'));
         return view('signUpLogin');
     }
-    public function user()
+    public function login()
     {
-        return view('userProfile');
+        return view('login');
     }
 
 }
