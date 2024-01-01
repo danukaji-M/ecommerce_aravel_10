@@ -9,7 +9,8 @@
                     <div class="col-md-5 my-auto">
                         <form role="search">
                             <div class="input-group">
-                                <input type="search" id="search" placeholder="Search your product" class="form-control" />
+                                <input type="search" id="search" placeholder="Search your product"
+                                    class="form-control" />
                                 <button class="btn bg-info input-group-text fw-bold" type="submit">
                                     search
                                     <i class="bi bi-search"></i>
@@ -44,30 +45,31 @@
                                     @endif
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" href="{{'/userprofile'}}"><i class="fa fa-user"></i> Profile</a></li>
+                                    <li><a class="dropdown-item" href="{{ '/userprofile' }}"><i class="fa fa-user"></i>
+                                            Profile</a></li>
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i> My Orders</a>
                                     </li>
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a>
                                     </li>
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My
                                             Cart</a></li>
-                                    <li><a class="dropdown-item" onclick="
-                                    @if (session()->has('email'))
-                                    logout();
-                                    @else
-                                        @endif
-                                    " href="
-                                        @if (session()->has('email'))
-                                    @else
-                                        /login
-                                        @endif
-                                        "><i class="fa fa-sign-out"></i> 
-                                        @if (session()->has('email'))
-                                        Logout
-                                    @else
-                                        Login
-                                        @endif
-                                    </a>
+                                    <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i>Seller Profile</a></li>
+                                    <li><a class="dropdown-item"
+                                            onclick="
+                                    @if (session()->has('email')) logout();
+                                    @else @endif
+                                    "
+                                            href="
+                                        @if (session()->has('email')) @else
+                                        /login @endif
+                                        "><i
+                                                class="fa fa-sign-out"></i>
+                                            @if (session()->has('email'))
+                                                Logout
+                                            @else
+                                                Login
+                                            @endif
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -121,14 +123,15 @@
         </nav>
     </div>
 
-@push('script')
-<!-- Include jQuery from a CDN -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
-@endpush
-@push('style')
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-@endpush
+    @push('script')
+        <!-- Include jQuery from a CDN -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+    @endpush
+    @push('style')
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
+        <link rel="stylesheet" type="text/css"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    @endpush

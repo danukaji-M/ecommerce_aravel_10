@@ -34,3 +34,7 @@ Route::get('/userprofile' , [App\Http\Controllers\userProfileController::class,'
 Route::get('/addressupdate' , [App\Http\Controllers\AddressUpdate::class,'addressUpdate']);
 
 Route::post('/insertAddress' , [App\Http\Controllers\insertAddress::class,'insertAddress']);
+
+Route::get('/seller/myproducts', [App\Http\Controllers\myProductController::class,'myProduct']);
+
+Route::get('/seller/sellerprofile', [App\Http\Controllers\sellerProfileController::class,'sellerProfile']);
