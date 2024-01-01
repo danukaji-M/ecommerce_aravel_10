@@ -120,4 +120,50 @@ function logout() {
     xhr.send();
 }
 
+function insertAddress() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
+    const line1 = document.getElementById("line1").value;
+    const line2 = document.getElementById("line2").value;
+    const city = document.getElementById("city").value;
+    const state = document.getElementById("district").value;
+    const province = document.getElementById("province").value;
+    const postalcode = document.getElementById("postal").value;
+    const phone = document.getElementById("phnnum").value;
+    const defaultAddress = document.getElementById("default").checked;
+    const billingAddress = document.getElementById("billing").checked;
+    var BD;
+    if (defaultAddress == true && billingAddress == true) {
+        BD = 1;
+    } else if (defaultAddress == true && billingAddress == false) {
+        BD = 2;
+    } else if (defaultAddress == false && billingAddress == true) {
+        BD = 3;
+    } else if (defaultAddress == false && billingAddress == false) {
+        BD = 4;
+    }
+    var f = new FormData();
+    f.append("line1", line1);
+    f.append("line2", line2);
+    f.append("city", city);
+    f.append("district", state);
+    f.append("province", province);
+    f.append("postalcode", postalcode);
+    f.append("phone", phone);
+    f.append("db", BD);
 
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
+            var response = xhr.responseText;
+            console.log(response);
+            if (response == "Success") {
+                alert("Address Inserted");
+            }
+        }
+    };
+    xhr.open("POST", "/insertAddress", true);
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+    xhr.send(f);
+}

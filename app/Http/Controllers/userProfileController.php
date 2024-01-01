@@ -30,7 +30,8 @@ class userProfileController extends Controller
 
         if ($addressData) {
             return view('userProfile', [
-                'addressData' => $addressData,
+                'userProfile' => $userProfile,
+                'addressData' => $addressData
             ]);
             if ($userProfile) {
                 return view('userProfile', [

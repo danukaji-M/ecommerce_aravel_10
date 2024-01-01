@@ -32,3 +32,5 @@ Route::post('/logout' , [App\Http\Controllers\logout::class,'logout']);
 Route::get('/userprofile' , [App\Http\Controllers\userProfileController::class,'userProfile']);
 
 Route::get('/addressupdate' , [App\Http\Controllers\AddressUpdate::class,'addressUpdate']);
+
+Route::post('/insertAddress' , [App\Http\Controllers\insertAddress::class,'insertAddress']);

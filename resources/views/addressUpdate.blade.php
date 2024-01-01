@@ -34,6 +34,11 @@
                                         placeholder="Enter Your Postal Code">
                                 </div>
                                 <div class="col-12 col-lg-6">
+                                    <label class="form-label" for="phnnum">Phone Number</label>
+                                    <input type="text" id="phnnum" class="form-control"
+                                        placeholder="Enter Your Phone Number">
+                                </div>
+                                <div class="col-12 col-lg-6">
                                     <label class="form-label" for="city">Select Your City</label>
                                     <select name="city" class="form-control" id="city">
                                         <option value="0">Select Your City</option>
@@ -69,13 +74,11 @@
                                 <div class="col-12 col-lg-6">
                                     <input type="checkbox" id="default">
                                     <label class="form-label text-warning" for="default">Use As Default Address</label>
-                                </div>
-                                <div class="col-12 col-lg-6">
                                     <input type="checkbox" id="billing">
                                     <label class="form-label text-warning" for="billing">Use As Billing Address</label>
                                 </div>
                                 <div class="col-12 m-5 col-lg-6">
-                                    <button class="btn btn-block btn-warning" >
+                                    <button onclick="insertAddress();" class="btn btn-block btn-warning" >
                                         Add Address
                                     </button>
                                 </div>
