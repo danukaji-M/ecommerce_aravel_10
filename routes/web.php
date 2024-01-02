@@ -38,3 +38,5 @@ Route::post('/insertAddress' , [App\Http\Controllers\insertAddress::class,'inser
 Route::get('/seller/myproducts', [App\Http\Controllers\myProductController::class,'myProduct']);
 
 Route::get('/seller/sellerprofile', [App\Http\Controllers\sellerProfileController::class,'sellerProfile']);
+
+Route::get('/navbar', [App\Http\Controllers\navbarController::class,'navbar']);
