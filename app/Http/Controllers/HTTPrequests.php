@@ -15,7 +15,6 @@ class HTTPrequests extends Controller
     {
         $data = dataread::all();
         return view('signUpLogin', compact('data'));
-        return view('signUpLogin');
     }
     public function login()
     {

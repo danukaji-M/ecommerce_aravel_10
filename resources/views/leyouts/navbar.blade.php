@@ -53,7 +53,7 @@
                                     </li>
                                     <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My
                                             Cart</a></li>
-                                    <li><a class="dropdown-item" href="#"><i class=""></i>Seller Account</a></li>
+                                    <li><a class="dropdown-item" href="/seller/sellerprofile"><i class=""></i>Seller Account</a></li>
                                     <li><a class="dropdown-item"
                                             onclick="
                                     @if (session()->has('email')) logout();

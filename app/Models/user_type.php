@@ -9,8 +9,8 @@ class user_type extends Model
 {
     use HasFactory;
     protected $table = 'user_type';
-    public function users()
+    public function user_type()
     {
-        return $this->belongsToMany(user::class, 'user_has_user_type', 'user_type_id', 'user_email');
+        return $this->belongsToMany(user_type::class, 'user_has_user_type', 'user_type_id', 'user_email');
     }
 }

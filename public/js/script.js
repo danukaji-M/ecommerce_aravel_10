@@ -1,3 +1,7 @@
+var csrfToken = document.head.querySelector(
+    'meta[name="csrf-token"]'
+).content;
+
 function signUp() {
     var fname = document.getElementById("name").value;
     var lname = document.getElementById("lname").value;
@@ -18,9 +22,7 @@ function signUp() {
     f.append("phone", phone);
     f.append("user_types", user_types);
 
-    var csrfToken = document.head.querySelector(
-        'meta[name="csrf-token"]'
-    ).content;
+
 
     var xhr = new XMLHttpRequest();
 
@@ -65,9 +67,7 @@ function login() {
     f.append("password", pass);
     f.append("remember", ck);
 
-    var csrfToken = document.head.querySelector(
-        'meta[name="csrf-token"]'
-    ).content;
+
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -94,9 +94,7 @@ function login() {
 }
 
 function logout() {
-    var csrfToken = document.head.querySelector(
-        'meta[name="csrf-token"]'
-    ).content;
+
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -121,9 +119,7 @@ function logout() {
 }
 
 function insertAddress() {
-    var csrfToken = document.head.querySelector(
-        'meta[name="csrf-token"]'
-    ).content;
+
     const line1 = document.getElementById("line1").value;
     const line2 = document.getElementById("line2").value;
     const city = document.getElementById("city").value;
@@ -166,4 +162,22 @@ function insertAddress() {
     xhr.open("POST", "/insertAddress", true);
     xhr.setRequestHeader("X-CSRF-Token", csrfToken);
     xhr.send(f);
+}
+
+function sellerReg() {
+    var x = true;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+        if (xhr.status == 200 && xhr.readyState == 4) {
+            var r = xhr.responseText;
+            alert(r);
+            if (r == "Success") {
+                alert("Seller Requested");
+            }
+        }
+    };
+    xhr.open("POST", "/sellerReg", true);
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+    xhr.send();
 }

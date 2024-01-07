@@ -40,3 +40,5 @@ Route::get('/seller/myproducts', [App\Http\Controllers\myProductController::clas
 Route::get('/seller/sellerprofile', [App\Http\Controllers\sellerProfileController::class,'sellerProfile']);
 
 Route::get('/navbar', [App\Http\Controllers\navbarController::class,'navbar']);
+
+Route::post('/sellerReg', [App\Http\Controllers\sellerReg::class,'sellerReg']);
