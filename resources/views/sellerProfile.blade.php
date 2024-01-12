@@ -28,62 +28,40 @@
                         </div>
                         <div class="col-12">
                             <div class="row justify-content-center align-items-center">
-                                <div class="col-12 col-lg-5 m-lg-4 card">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <img src="{{ asset('images/seller/') }}" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="col-7">
-                                            <span class="fw-bold text-info">Product Name</span>
-                                            <br>
-                                            <span class="fw-bold text-info">product Price</span>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12 col-lg-6">
-                                                    <button
-                                                        class="btn btn-outline-warning form-control btn-sm">Discount</button>
-                                                </div>
-                                                <div class="col-12 col-lg-6">
-                                                    <button
-                                                        class="btn btn-outline-info form-control btn-sm">Desable/Enable</button>
-                                                </div>
+                                @foreach ($products as $product)
+                                    <div class="col-12 col-lg-5 m-lg-4 card">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <img src="{{ asset('product_img/' . $product->product_img) }}" alt=""
+                                                    class="img-fluid">
+                                            </div>
+                                            <div class="col-7">
+                                                <span class="fw-bold text-info">{{ $product->product_name }}</span>
                                                 <br>
+                                                <span class="fw-bold text-info">LKR. {{ $product->product_price }}.00</span>
                                                 <br>
-                                                <div class="col-12 mb-4 col-lg-6">
-                                                    <button class="btn btn-outline-danger form-control btn-sm">Edit</button>
+                                                <div class="row">
+                                                    <div class="col-12 col-lg-6">
+                                                        <button onclick=discount('{{ $product->id }}');
+                                                            class="btn btn-outline-warning form-control btn-sm">Discount</button>
+                                                    </div>
+                                                    <div class="col-12 col-lg-6">
+                                                        <button
+                                                        onclick=disEna('{{ $product->id }}');
+                                                            class="btn btn-outline-info form-control btn-sm">Desable/Enable</button>
+                                                    </div>
+                                                    <br>
+                                                    <br>
+                                                    <div class="col-12 mb-4 col-lg-6">
+                                                        <button
+                                                        onclick=Edite('{{ $product->id }}');
+                                                            class="btn btn-outline-danger form-control btn-sm">Edit</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-12 col-lg-5 m-lg-4 card">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <img src="{{ asset('images/seller/') }}" alt="" class="img-fluid">
-                                        </div>
-                                        <div class="col-7">
-                                            <span class="fw-bold text-info">Product Name</span>
-                                            <br>
-                                            <span class="fw-bold text-info">product Price</span>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-12 col-lg-6">
-                                                    <button
-                                                        class="btn btn-outline-warning form-control btn-sm">Discount</button>
-                                                </div>
-                                                <div class="col-12 col-lg-6">
-                                                    <button
-                                                        class="btn btn-outline-info form-control btn-sm">Desable/Enable</button>
-                                                </div>
-                                                <br>
-                                                <br>
-                                                <div class="col-12 mb-4 col-lg-6">
-                                                    <button class="btn btn-outline-danger form-control btn-sm">Edit</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                     @else
