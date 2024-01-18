@@ -89,6 +89,14 @@
                                         <option value="0">Select A Color</option>
                                     </select>
                                 </div>
+                                <div class="col-12 col-lg-6">
+                                    <label for="shipping">Product Shipping Cost</label>
+                                    <div class=" input-group">
+                                        <span class=" input-group-text" >LKR</span>
+                                        <input type="text" id="shipping" class="form-control">
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
