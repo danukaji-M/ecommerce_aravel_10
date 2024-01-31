@@ -1,6 +1,4 @@
-var csrfToken = document.head.querySelector(
-    'meta[name="csrf-token"]'
-).content;
+var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
 
 function signUp() {
     var fname = document.getElementById("name").value;
@@ -21,8 +19,6 @@ function signUp() {
     f.append("gender", gender);
     f.append("phone", phone);
     f.append("user_types", user_types);
-
-
 
     var xhr = new XMLHttpRequest();
 
@@ -67,7 +63,6 @@ function login() {
     f.append("password", pass);
     f.append("remember", ck);
 
-
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -94,7 +89,6 @@ function login() {
 }
 
 function logout() {
-
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -119,7 +113,6 @@ function logout() {
 }
 
 function insertAddress() {
-
     const line1 = document.getElementById("line1").value;
     const line2 = document.getElementById("line2").value;
     const city = document.getElementById("city").value;
@@ -180,4 +173,93 @@ function sellerReg() {
     xhr.open("POST", "/sellerReg", true);
     xhr.setRequestHeader("X-CSRF-Token", csrfToken);
     xhr.send();
+}
+
+/*****************************************************************************************************/
+function addProduct() {
+    const name = document.getElementById("product-name").value;
+    const price = document.getElementById("product-price").value;
+    const description = document.getElementById("product-description").value;
+    var images = document.getElementById("files");
+    var file_count = images.files.length;
+    var categorynew = document.getElementById("product-category").value;
+    var size = [];
+    if (categorynew == "5") {
+        size[0] = document.getElementById("small").checked;
+        size[1] = document.getElementById("medium").checked;
+        size[2] = document.getElementById("L").checked;
+        size[3] = document.getElementById("XL").checked;
+        size[4] = document.getElementById("XXL").checked;
+    }
+    var stor = [];
+    if (categorynew == "1") {
+        for (i = 0; i < 18; i++) {
+            stor[i] = document.getElementById(i + 1 + "mb").checked;
+        }
+    }
+    var qty = document.getElementById("product-quantity").value;
+    var color = document.getElementById("product-color").value;
+    var shipping = document.getElementById("shipping").value;
+    var brand = document.getElementById("product-brand").value;
+    var f = new FormData();
+    for (let i = 0; i < file_count; i++) {
+        f.append("images"+i, images.files[i]);
+    }
+    for (let j =0; j < stor.length; j++) {
+        f.append("stor[]", stor[j]);
+    }
+    f.append("name", name);
+    f.append("brand", brand); 
+    f.append("price", price);
+    f.append("description", description);
+    f.append("category", categorynew);
+    f.append("size", size);
+    f.append("stor", stor);
+    f.append("qty", qty);
+    f.append("color", color);
+    f.append("shipping", shipping);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if(xhr.readyState == 4 && xhr.status == 200){
+            var response = xhr.responseText;
+            console.log(response);
+        }
+    }
+    xhr.open("POST", "/addproduct", true);
+    xhr.setRequestHeader("X-CSRF-Token", csrfToken);
+    xhr.send(f);
+}
+
+/********************************************************************************************************************************************/
+
+var category;
+var category5Handle = false;
+var category1Handle = false;
+function viewclothing() {
+    category = document.getElementById("product-category").value;
+    if (category == "5" && !category5Handle) {
+        document.getElementById("clothview").classList = "col-12 d-block";
+        category5Handle = true;
+    }
+    if (category != "5" && category5Handle) {
+        document.getElementById("clothview").classList = "col-12 d-none";
+        category5Handle = false;
+    }
+    if (category == "1" && !category1Handle) {
+        document.getElementById("mobileview").classList = "col-12 d-block";
+        category1Handle = true;
+    }
+    if (category != "1" && category1Handle) {
+        document.getElementById("mobileview").classList = "col-12 d-none";
+        category1Handle = false;
+    }
+}
+setInterval(viewclothing, 100);
+
+function resetCategory5Flag() {
+    category5Handle = false;
+}
+function resetCategory6Flag() {
+    category1Handle = false;
 }

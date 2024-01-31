@@ -16,10 +16,10 @@ class sellerProfileController extends Controller
         "); // Use the 'DB' class from the 'Illuminate\Support\Facades' namespace
 
         $products = DB::select("
-        SELECT * 
-FROM product 
-INNER JOIN product_img ON product.id = product_img.product_id 
-WHERE product.product_status = 1 AND product.seller_email = '" . session('email') . "'
+            SELECT * 
+            FROM product 
+            INNER JOIN product_img ON product.id = product_img.product_id 
+            WHERE product.product_status = 1 AND product.seller_email = '" . session('email') . "'
         ");
 
         return view('sellerProfile', ['seller' => $seller, 'products' => $products]);
