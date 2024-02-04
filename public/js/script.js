@@ -220,7 +220,8 @@ function addProduct() {
     for (let i = 0; i < file_count; i++) {
         f.append("images" + i, images.files[i]);
     }
-    var jsonData = JSON.stringify(size);
+    var jsonData = JSON.stringify(stor);
+    var jsonData2 = JSON.stringify(size);
     f.append("file_count", file_count);
     f.append("name", name);
     f.append("brand", brand);
@@ -241,6 +242,7 @@ function addProduct() {
     var combinedData = {
         FormData: f,
         jsonData: jsonData,
+        jsonData2: jsonData2,
     };
     var combinedDataJson = JSON.stringify(combinedData);
     xhr.open("POST", "/addproduct", true);

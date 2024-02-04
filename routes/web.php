@@ -48,3 +48,5 @@ Route::get('/sellerReg', [App\Http\Controllers\productController::class,'product
 Route::get('/seller/addproduct', [App\Http\Controllers\productAddController::class,'addProduct']);
 
 Route::post('/addproduct', [App\Http\Controllers\productAddController::class,'addProductProcess']);
+
+Route::get('/seller/singleProduct', [App\Http\Controllers\singleProductViewController::class,'singleProductView']);

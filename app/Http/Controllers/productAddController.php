@@ -33,6 +33,7 @@ class productAddController extends Controller
         $jsonData = $request->json()->all();
         $formData = $jsonData['formData'];
         $actualJsonData = $jsonData['jsonData'];
+        $actualJsonData2 = $jsonData['jsonData2'];
         try {
 
             DB::insert("
@@ -54,22 +55,57 @@ class productAddController extends Controller
             //insert product 
             DB::insert("
             INSERT INTO `product_click`
-            (`product_id`,`clicks`) VALUES ('".$product_id."','1')
+            (`product_id`,`clicks`) VALUES ('" . $product_id . "','1')
             ");
             //insert colors
             DB::insert("
             INSERT INTO `product_has_color`
-            (`product_id`,`color_id`) VALUES ('".$product_id."','".$formData['color']."')
+            (`product_id`,`color_id`) VALUES ('" . $product_id . "','" . $formData['color'] . "')
             ");
             //insert storage
-            $i = 0;
-            foreach($actualJsonData as $data){
-                $i = $i+1;
-                if($data){
-                    DB::insert("
+            if ($formData['category'] == 1) {
+                $i = 0;
+                foreach ($actualJsonData as $data) {
+                    $i = $i + 1;
+                    if ($data) {
+                        DB::insert("
                     INSERT INTO `product_has_storage_size_capacity_size`
-                    (`product_id`,`storage_size_capacity_size_id`) VALUES ('".$product_id."','".$i."')
+                    (`product_id`,`storage_size_capacity_size_id`) VALUES ('" . $product_id . "','" . $i . "')
                     ");
+                    }
+                }
+            }
+            //insert size
+            if ($formData['category'] == 5) {
+                $j = 0;
+                foreach ($actualJsonData2 as $data) {
+                    $j = $j + 1;
+                    if ($data && $j == 1) {
+                        DB::insert("
+                    INSERT INTO `cloth_sizes`
+                    (`product_id`,`small`) VALUES ('" . $product_id . "','1')
+                    ");
+                    } else if ($data && $j == 2) {
+                        DB::insert("
+                    INSERT INTO `cloth_sizes`
+                    (`product_id`,`medium`) VALUES ('" . $product_id . "','1')
+                    ");
+                    } else if ($data && $j == 3) {
+                        DB::insert("
+                    INSERT INTO `cloth_sizes`
+                    (`product_id`,`large`) VALUES ('" . $product_id . "','1')
+                    ");
+                    } else if ($data && $j == 4) {
+                        DB::insert("
+                    INSERT INTO `cloth_sizes`
+                    (`product_id`,`xl`) VALUES ('" . $product_id . "','1')
+                    ");
+                    } else if ($data && $j == 5) {
+                        DB::insert("
+                    INSERT INTO `cloth_sizes`
+                    (`product_id`,`xxl`) VALUES ('" . $product_id . "','1')
+                    ");
+                    }
                 }
             }
         } catch (Exception $e) {
@@ -86,11 +122,11 @@ class productAddController extends Controller
                 DB::insert("
                 INSERT INTO `product_img`
                 (`product_img`,`product_id`) VALUES
-                ('product_img/".$imageName."','".$product_id."')
+                ('product_img/" . $imageName . "','" . $product_id . "')
                 ");
-                }
+            }
         } catch (Exception $e) {
-            return "Add Product Image" .$e;
+            return "Add Product Image" . $e;
         }
     }
 }
