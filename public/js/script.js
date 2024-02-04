@@ -1,6 +1,7 @@
-var csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-
 function signUp() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     var fname = document.getElementById("name").value;
     var lname = document.getElementById("lname").value;
     var email = document.getElementById("email").value;
@@ -47,6 +48,9 @@ function signUp() {
 }
 
 function login() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     var email = document.getElementById("email").value;
     var pass = document.getElementById("password").value;
     var checker = document.getElementById("rbm").checked;
@@ -89,6 +93,9 @@ function login() {
 }
 
 function logout() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4) {
@@ -113,6 +120,9 @@ function logout() {
 }
 
 function insertAddress() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     const line1 = document.getElementById("line1").value;
     const line2 = document.getElementById("line2").value;
     const city = document.getElementById("city").value;
@@ -159,7 +169,9 @@ function insertAddress() {
 
 function sellerReg() {
     var x = true;
-
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function () {
         if (xhr.status == 200 && xhr.readyState == 4) {
@@ -177,6 +189,9 @@ function sellerReg() {
 
 /*****************************************************************************************************/
 function addProduct() {
+    var csrfToken = document.head.querySelector(
+        'meta[name="csrf-token"]'
+    ).content;
     const name = document.getElementById("product-name").value;
     const price = document.getElementById("product-price").value;
     const description = document.getElementById("product-description").value;
@@ -203,32 +218,35 @@ function addProduct() {
     var brand = document.getElementById("product-brand").value;
     var f = new FormData();
     for (let i = 0; i < file_count; i++) {
-        f.append("images"+i, images.files[i]);
+        f.append("images" + i, images.files[i]);
     }
-    for (let j =0; j < stor.length; j++) {
-        f.append("stor[]", stor[j]);
-    }
+    var jsonData = JSON.stringify(size);
+    f.append("file_count", file_count);
     f.append("name", name);
-    f.append("brand", brand); 
+    f.append("brand", brand);
     f.append("price", price);
     f.append("description", description);
     f.append("category", categorynew);
     f.append("size", size);
-    f.append("stor", stor);
-    f.append("qty", qty);
     f.append("color", color);
     f.append("shipping", shipping);
 
     var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(){
-        if(xhr.readyState == 4 && xhr.status == 200){
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState == 4 && xhr.status == 200) {
             var response = xhr.responseText;
             console.log(response);
         }
-    }
+    };
+    var combinedData = {
+        FormData: f,
+        jsonData: jsonData,
+    };
+    var combinedDataJson = JSON.stringify(combinedData);
     xhr.open("POST", "/addproduct", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
     xhr.setRequestHeader("X-CSRF-Token", csrfToken);
-    xhr.send(f);
+    xhr.send(combinedDataJson);
 }
 
 /********************************************************************************************************************************************/
@@ -236,7 +254,7 @@ function addProduct() {
 var category;
 var category5Handle = false;
 var category1Handle = false;
-function viewclothing() {
+function view() {
     category = document.getElementById("product-category").value;
     if (category == "5" && !category5Handle) {
         document.getElementById("clothview").classList = "col-12 d-block";
@@ -255,11 +273,7 @@ function viewclothing() {
         category1Handle = false;
     }
 }
-setInterval(viewclothing, 100);
 
-function resetCategory5Flag() {
-    category5Handle = false;
-}
-function resetCategory6Flag() {
-    category1Handle = false;
+function load() {
+    setInterval(view, 100);
 }

@@ -30,35 +30,67 @@ class productAddController extends Controller
     }
     public function addProductProcess(Request $request)
     {
+        $jsonData = $request->json()->all();
+        $formData = $jsonData['formData'];
+        $actualJsonData = $jsonData['jsonData'];
         try {
 
             DB::insert("
             INSERT INTO `product`
             (`product_name`, `product_price`, `product_description`, 
             `product_status`, `product_category_id`, `product_brand_id`, 
-            `product_count`, `seller_email`,`Shipping_price`) VALUES 
-            ('" . $request->input('name') . "', '" . $request->input('price') . "', 
-            '" . $request->input('description') . "', '1', '" . $request->input("categorynew") . "', 
-            '" . $request->input('brand') . "', '" . $request->input('qty') . "', 
-            '" . session('email') . "', '" . $request->input('shipping') . "')
+            `product_count`, `seller_email`,`shipping_price`) VALUES 
+            ('" . $formData['name'] . "', '" . $formData['price'] . "', 
+            '" . $formData['description'] . "', '1', '" . $formData['category'] . "', 
+            '" . $formData['brand'] . "', '" . $formData['qty'] . "', 
+            '" . session('email') . "', '" . $formData['shipping'] . "')
             ");
-            $product_id = DB::select("
-            SELECT * FROM `product` WHERE `product_name` = '" . $request->input('name') . "' AND `seller_email` = '" . session('email') . "'
+            $product = DB::select("
+            SELECT * FROM `product` WHERE 
+            `product_name` = '" . $formData['name'] . "' AND 
+            `seller_email` = '" . session('email') . "' ORDER BY id DESC LIMIT 1
             ");
-        } catch (Exception $e) {
-            return "Data insert Error";
-        }
-        try {
-            for ($i = 0; $i < 3; $i++) {
-                $request->validate([
-                    'images' . $i => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
-                ]);
-                $image = $request->file('images' . $i);
-                $imageName = time() . $i . session('email') . uniqid() . '.' . $image->extension();
-                $image->move(public_path('product_img'), $imageName);
+            $product_id = $product[0]->id;
+            //insert product 
+            DB::insert("
+            INSERT INTO `product_click`
+            (`product_id`,`clicks`) VALUES ('".$product_id."','1')
+            ");
+            //insert colors
+            DB::insert("
+            INSERT INTO `product_has_color`
+            (`product_id`,`color_id`) VALUES ('".$product_id."','".$formData['color']."')
+            ");
+            //insert storage
+            $i = 0;
+            foreach($actualJsonData as $data){
+                $i = $i+1;
+                if($data){
+                    DB::insert("
+                    INSERT INTO `product_has_storage_size_capacity_size`
+                    (`product_id`,`storage_size_capacity_size_id`) VALUES ('".$product_id."','".$i."')
+                    ");
+                }
             }
         } catch (Exception $e) {
-            return "Add Product Image";
+            return $e;
+        }
+        try {
+            for ($i = 0; $i < $formData['file_count']; $i++) {
+                $request->validate([
+                    'formData.images' . $i => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+                ]);
+                $image = $formData('images' . $i);
+                $imageName = time() . $i . session('email') . uniqid() . '.' . $image->extension();
+                $image->move(public_path('product_img'), $imageName);
+                DB::insert("
+                INSERT INTO `product_img`
+                (`product_img`,`product_id`) VALUES
+                ('product_img/".$imageName."','".$product_id."')
+                ");
+                }
+        } catch (Exception $e) {
+            return "Add Product Image" .$e;
         }
     }
 }

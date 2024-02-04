@@ -161,9 +161,15 @@
                 </div>
             </div>
         </div>
-
         @include('leyouts.footer')
     @endsection
+    @push('scripts')
+    <script>
+        window.onload = function() {
+            load();
+        }
+    </script>
+    @endpush
     @push('styles')
         <link rel="stylesheet" type="text/css" href="{{ asset('css/styles.css') }}">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
